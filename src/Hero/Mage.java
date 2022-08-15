@@ -32,7 +32,8 @@ public class Mage extends Hero {
         primaryAttribute.setStrength(primaryAttribute.getStrength() + 1);
         primaryAttribute.setDexterity(primaryAttribute.getDexterity() + 1);
         primaryAttribute.setIntelligence(primaryAttribute.getIntelligence() + 5);
-        System.out.println("Level up!");
+        System.out.println("");
+        System.out.println("Level up! Current level is: " + super.getLevel() + ".");
     }
 
     @Override
@@ -50,6 +51,9 @@ public class Mage extends Hero {
     }
     @Override
     public void dealDamage() {
+        checkDPS();
+        System.out.println();
+        System.out.println(super.getName() + " dealt damage with " + this.DPS + " DPS.");
         setLevelPoints(getLevelPoints() + 10);
         checkLevelPoints();
     }
@@ -65,8 +69,11 @@ public class Mage extends Hero {
             throw new InvalidWeaponException("Required level for this weapon is " + testableWeapon.getRequiredLevel() + ".");
         } else {
             this.itemList.put(testableWeapon.getItemSlot(), testableWeapon.getName());
+            System.out.println("");
             System.out.println(testableWeapon.getName() + " added to weapons.");
         }
+        setLevelPoints(getLevelPoints() + 5);
+        checkLevelPoints();
     }
 
     @Override
@@ -83,18 +90,20 @@ public class Mage extends Hero {
             throw new InvalidArmorException("Required level for this armor is " + testableArmor.getRequiredLevel() + ".");
         } else {
             this.itemList.put(slot.toLowerCase(), testableArmor.getName());
+            System.out.println("");
             System.out.println(testableArmor.getName() + " added to " + slot.toLowerCase() + " as an armor.");
         }
+
+        setLevelPoints(getLevelPoints() + 2);
+        checkLevelPoints();
     }
     @Override
     public void checkTotalAttributes() {
         this.totalAttribute = new PrimaryAttribute(primaryAttribute.getStrength(), primaryAttribute.getDexterity(), primaryAttribute.getIntelligence());
         for (HashMap.Entry<String, String> entry : this.itemList.entrySet()) {
-            if (entry.getValue() == "Mail") {
-                this.totalAttribute.setStrength(totalAttribute.getStrength()*1.8);
-                this.totalAttribute.setDexterity(totalAttribute.getDexterity()*1.1);
-            } else if (entry.getValue() == "Plate") {
-                this.totalAttribute.setStrength(totalAttribute.getStrength()*2.5);
+            if (entry.getValue() == "Cloth") {
+                this.totalAttribute.setStrength(totalAttribute.getStrength()*1.4);
+                this.totalAttribute.setDexterity(totalAttribute.getDexterity()*1.3);
             }
         }
     }
@@ -103,6 +112,7 @@ public class Mage extends Hero {
     public void checkDPS() {
         checkTotalAttributes();
         double base = 1+(totalAttribute.getStrength()+totalAttribute.getDexterity()+totalAttribute.getIntelligence())/100;
+        double increase = primaryAttribute.getIntelligence()*1.01;
         double weaponDPS = 0;
         for (HashMap.Entry<String, String> entry : this.itemList.entrySet()) {
             if (entry.getKey() == "Weapon") {
@@ -123,6 +133,6 @@ public class Mage extends Hero {
                 }
             }
         }
-        this.DPS = base+weaponDPS;
+        this.DPS = base+weaponDPS+increase;
     }
 }

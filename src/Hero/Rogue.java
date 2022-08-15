@@ -30,6 +30,8 @@ public class Rogue extends Hero {
         primaryAttribute.setStrength(primaryAttribute.getStrength()+1);
         primaryAttribute.setDexterity(primaryAttribute.getDexterity()+4);
         primaryAttribute.setIntelligence(primaryAttribute.getIntelligence()+1);
+        System.out.println("");
+        System.out.println("Level up! Current level is: " + super.getLevel() + ".");
     }
     @Override
     public void getStats() {
@@ -46,8 +48,12 @@ public class Rogue extends Hero {
 
     @Override
     public void dealDamage() {
+        checkDPS();
+        System.out.println();
+        System.out.println(super.getName() + " dealt damage with " + this.DPS + " DPS.");
         setLevelPoints(getLevelPoints() + 10);
         checkLevelPoints();
+
     }
 
     @Override
@@ -61,8 +67,12 @@ public class Rogue extends Hero {
             throw new InvalidWeaponException("Required level for this weapon is " + testableWeapon.getRequiredLevel() + ".");
         } else {
             this.itemList.put(testableWeapon.getItemSlot(), testableWeapon.getName());
+            System.out.println("");
             System.out.println(testableWeapon.getName() + " added to weapons.");
         }
+
+        setLevelPoints(getLevelPoints() + 5);
+        checkLevelPoints();
     }
 
     @Override
@@ -79,8 +89,12 @@ public class Rogue extends Hero {
             throw new InvalidArmorException("Required level for this armor is " + testableArmor.getRequiredLevel() + ".");
         } else {
             this.itemList.put(slot.toLowerCase(), testableArmor.getName());
+            System.out.println("");
             System.out.println(testableArmor.getName() + " added to " + slot.toLowerCase() + " as an armor.");
         }
+
+        setLevelPoints(getLevelPoints() + 2);
+        checkLevelPoints();
     }
     @Override
     public void checkTotalAttributes() {
@@ -89,8 +103,9 @@ public class Rogue extends Hero {
             if (entry.getValue() == "Mail") {
                 this.totalAttribute.setStrength(totalAttribute.getStrength()*1.8);
                 this.totalAttribute.setDexterity(totalAttribute.getDexterity()*1.1);
-            } else if (entry.getValue() == "Plate") {
-                this.totalAttribute.setStrength(totalAttribute.getStrength()*2.5);
+            } else if (entry.getValue() == "Leather") {
+                this.totalAttribute.setStrength(totalAttribute.getStrength()*1.5);
+                this.totalAttribute.setDexterity(totalAttribute.getDexterity()*1.2);
             }
         }
     }
@@ -99,6 +114,7 @@ public class Rogue extends Hero {
     public void checkDPS() {
         checkTotalAttributes();
         double base = 1+(totalAttribute.getStrength()+totalAttribute.getDexterity()+totalAttribute.getIntelligence())/100;
+        double increase = primaryAttribute.getDexterity()*1.01;
         double weaponDPS = 0;
         for (HashMap.Entry<String, String> entry : this.itemList.entrySet()) {
             if (entry.getKey() == "Weapon") {
@@ -119,7 +135,7 @@ public class Rogue extends Hero {
                 }
             }
         }
-        this.DPS = base+weaponDPS;
+        this.DPS = base+weaponDPS+increase;
     }
 
 }

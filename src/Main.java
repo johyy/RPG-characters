@@ -17,6 +17,7 @@ public class Main {
         velho.getWeapon("wand");
         velho.getStats();
         velho.getWeapon("staff");
+        velho.getArmor("cloth", "head");
         velho.getStats();
     }
 }
