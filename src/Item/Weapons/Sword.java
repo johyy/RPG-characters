@@ -14,6 +14,7 @@ public class Sword extends Item {
         this.attackSpeed = 2;
     }
 
+    // method returns the calculated weaponDPS
     public int getWeaponDPS() {
         return damage+attackSpeed;
     }

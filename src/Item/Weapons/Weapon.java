@@ -11,6 +11,7 @@ public class Weapon {
     Sword sword = new Sword();
     Wand wand = new Wand();
 
+    // method for making a weapon item out of a string
     public Item checkWeapon(String weapon) {
         switch (weapon) {
             case "axe":
@@ -33,6 +34,7 @@ public class Weapon {
         }
     }
 
+    // method for checking if weapon is suitable for a character type
     public boolean checkTypeWeapon(String weapon, String type) {
         if (type == "mage" && weapon == "staff" || type == "mage" && weapon == "wand" ) {
             return true;

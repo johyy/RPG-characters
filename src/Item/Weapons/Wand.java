@@ -14,6 +14,7 @@ public class Wand extends Item {
         this.attackSpeed = 0.5;
     }
 
+    // method returns the calculated weaponDPS
     public double getWeaponDPS() {
         return damage+attackSpeed;
     }

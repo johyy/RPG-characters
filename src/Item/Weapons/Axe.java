@@ -14,6 +14,7 @@ public class Axe extends Item {
         this.attackSpeed = 0.2;
     }
 
+    // method returns the calculated weaponDPS
     public double getWeaponDPS() {
         return damage+attackSpeed;
     }

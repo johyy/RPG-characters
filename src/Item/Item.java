@@ -18,7 +18,6 @@ public abstract class Item {
         this.itemSlot = itemSlot;
     }
 
-
     public String getName() {
         return name;
     }

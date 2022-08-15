@@ -37,7 +37,6 @@ public abstract class Hero {
         return levelPoints;
     }
 
-
     public abstract void levelUp();
     public abstract void getStats();
     public abstract void dealDamage();

@@ -8,6 +8,7 @@ public class Armor {
     Mail mail = new Mail();
     Plate plate = new Plate();
 
+    // method for making an armor item out of a string
     public Item checkArmor(String armor) {
         switch (armor) {
             case "cloth":
@@ -24,6 +25,7 @@ public class Armor {
         }
     }
 
+    // method for checking if armor is suitable for a character type
     public boolean checkTypeArmor(String armor, String type) {
         if (type == "mage" && armor == "cloth") {
             return true;
