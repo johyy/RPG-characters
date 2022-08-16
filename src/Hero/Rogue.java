@@ -84,7 +84,7 @@ public class Rogue extends Hero {
     @Override
     public void getArmor(String armor, String slot) throws InvalidArmorException {
         if (!(slot == "head" || slot == "body" || slot == "body")) {
-            throw new InvalidArmorException("Not a suitable slot"); // checks for typos
+            throw new InvalidArmorException("Not a suitable slot."); // checks for typos
         }
         Item testableArmor = this.armor.checkArmor(armor); // makes an Item out of a string
         if (testableArmor == null) {
@@ -109,11 +109,9 @@ public class Rogue extends Hero {
         this.totalAttribute = new PrimaryAttribute(primaryAttribute.getStrength(), primaryAttribute.getDexterity(), primaryAttribute.getIntelligence()); // makes a new instance of primary attributes
         for (HashMap.Entry<String, String> entry : this.itemList.entrySet()) {  // goes through the armory and adds points to total attributes with every armor
             if (entry.getValue() == "Mail") {
-                this.totalAttribute.setStrength(totalAttribute.getStrength()*1.8);
-                this.totalAttribute.setDexterity(totalAttribute.getDexterity()*1.1);
+                this.totalAttribute.setDexterity(totalAttribute.getDexterity()+1);
             } else if (entry.getValue() == "Leather") {
-                this.totalAttribute.setStrength(totalAttribute.getStrength()*1.5);
-                this.totalAttribute.setDexterity(totalAttribute.getDexterity()*1.2);
+                this.totalAttribute.setDexterity(totalAttribute.getDexterity()+2);
             }
         }
     }
@@ -122,19 +120,21 @@ public class Rogue extends Hero {
     @Override
     public void checkDPS() {
         checkTotalAttributes();  // updates values of total attributes
-        double base = 1+(totalAttribute.getStrength()+totalAttribute.getDexterity()+totalAttribute.getIntelligence())/100;
-        double increase = primaryAttribute.getDexterity()*1.01;
-        double weaponDPS = 1;
-        for (HashMap.Entry<String, String> entry : this.itemList.entrySet()) { // goes through the weaponry and adds points to total dps
-            if (entry.getKey() == "Weapon") {
-                if (entry.getValue() == "Dagger") {
-                    weaponDPS = new Dagger().getWeaponDPS();
-                } else if (entry.getValue() == "Sword") {
-                    weaponDPS = new Sword().getWeaponDPS();
+        double base = 1+(totalAttribute.getDexterity())/100;
+        if (itemList.containsKey("Weapon")) {
+            double weaponDPS = 1;
+            for (HashMap.Entry<String, String> entry : this.itemList.entrySet()) { // goes through the weaponry and adds points to total dps
+                if (entry.getKey() == "Weapon") {
+                    if (entry.getValue() == "Dagger") {
+                        weaponDPS = new Dagger().getWeaponDPS();
+                    } else if (entry.getValue() == "Sword") {
+                        weaponDPS = new Sword().getWeaponDPS();
+                    }
                 }
             }
+            this.DPS = base*weaponDPS; // calculates the total DPS'
+        } else {
+            this.DPS = base;
         }
-        this.DPS = base+weaponDPS+increase; // calculates the total DPS
     }
-
 }

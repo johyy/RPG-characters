@@ -16,6 +16,6 @@ public class Axe extends Item {
 
     // method returns the calculated weaponDPS
     public double getWeaponDPS() {
-        return damage+attackSpeed;
+        return damage*attackSpeed;
     }
 }

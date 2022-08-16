@@ -35,6 +35,6 @@ public class Main {
          */
 
         mage.getStats(); // DPS and attributes have gone up because of the equipment and the leveling up
-        
+
     }
 }

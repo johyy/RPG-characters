@@ -9,13 +9,13 @@ public class Bow extends Item {
     public Bow() {
         super.setName("Bow");
         super.setItemSlot("Weapon");
-        super.setRequiredLevel(1);
+        super.setRequiredLevel(2);
         this.damage = 10;
         this.attackSpeed = 1;
     }
 
     // method returns the calculated weaponDPS
     public int getWeaponDPS() {
-        return damage+attackSpeed;
+        return damage*attackSpeed;
     }
 }

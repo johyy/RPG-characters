@@ -16,6 +16,6 @@ public class Staff extends Item {
 
     // method returns the calculated weaponDPS
     public int getWeaponDPS() {
-        return damage+attackSpeed;
+        return damage*attackSpeed;
     }
 }
